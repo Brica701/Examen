@@ -6,12 +6,12 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ComercialDAOImpl extends ComercialDAO {
+public abstract class ComercialDAOImpl implements ComercialDAO {
 
     private Connection connection;
 
-    public ComercialDAOImpl() {
-        connection = DBConnection.getConnection();
+    public ComercialDAOImpl(Connection connection) {
+        this.connection = connection;
     }
 
     @Override

@@ -1,24 +1,44 @@
 package jsp_servlet_jdbc.model;
+
+import java.time.LocalDate;
 import java.util.Date;
-import java.util.Objects;
+
 public class Pedido {
     private int id;
     private double total;
-    private Date fecha;
+    private LocalDate fecha;
     private int idCliente;
     private int idComercial;
 
-    private Cliente cliente;       // para mostrar info asociada en JSP
-    private Comercial comercial;   // idem
+    // Nuevos atributos para acceso a objetos
+    private Cliente cliente;
+    private Comercial comercial;
 
-    public Pedido() {}
+    // Para mostrar en el listado
+    private String nombreCliente;
+    private String apellido1Cliente;
+    private String apellido2Cliente;
+    private String nombreComercial;
+    private String apellido1Comercial;
+    private String apellido2Comercial;
+
+    public Pedido() {
+    }
 
     public Pedido(int id, double total, Date fecha, int idCliente, int idComercial) {
         this.id = id;
         this.total = total;
-        this.fecha = fecha;
+        this.fecha = fecha.toInstant().atZone(java.time.ZoneId.systemDefault()).toLocalDate();
         this.idCliente = idCliente;
         this.idComercial = idComercial;
+    }
+
+    public Pedido(int id, double total, LocalDate fecha, Cliente cliente, Comercial comercial) {
+        this.id = id;
+        this.total = total;
+        this.fecha = fecha;
+        this.cliente = cliente;
+        this.comercial = comercial;
     }
 
     public int getId() {
@@ -37,11 +57,11 @@ public class Pedido {
         this.total = total;
     }
 
-    public Date getFecha() {
+    public LocalDate getFecha() {
         return fecha;
     }
 
-    public void setFecha(Date fecha) {
+    public void setFecha(LocalDate fecha) {
         this.fecha = fecha;
     }
 
@@ -76,5 +96,52 @@ public class Pedido {
     public void setComercial(Comercial comercial) {
         this.comercial = comercial;
     }
-}
 
+    public String getNombreCliente() {
+        return nombreCliente;
+    }
+
+    public void setNombreCliente(String nombreCliente) {
+        this.nombreCliente = nombreCliente;
+    }
+
+    public String getApellido1Cliente() {
+        return apellido1Cliente;
+    }
+
+    public void setApellido1Cliente(String apellido1Cliente) {
+        this.apellido1Cliente = apellido1Cliente;
+    }
+
+    public String getApellido2Cliente() {
+        return apellido2Cliente;
+    }
+
+    public void setApellido2Cliente(String apellido2Cliente) {
+        this.apellido2Cliente = apellido2Cliente;
+    }
+
+    public String getNombreComercial() {
+        return nombreComercial;
+    }
+
+    public void setNombreComercial(String nombreComercial) {
+        this.nombreComercial = nombreComercial;
+    }
+
+    public String getApellido1Comercial() {
+        return apellido1Comercial;
+    }
+
+    public void setApellido1Comercial(String apellido1Comercial) {
+        this.apellido1Comercial = apellido1Comercial;
+    }
+
+    public String getApellido2Comercial() {
+        return apellido2Comercial;
+    }
+
+    public void setApellido2Comercial(String apellido2Comercial) {
+        this.apellido2Comercial = apellido2Comercial;
+    }
+}

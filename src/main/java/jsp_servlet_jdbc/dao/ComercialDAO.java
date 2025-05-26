@@ -7,38 +7,18 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public abstract class ComercialDAO {
-    private Connection connection;
 
-    public ComercialDAO(Connection connection) {
-        this.connection = connection;
-    }
+public interface ComercialDAO {
+    Comercial findById(int id);
+    List<Comercial> findAll();
 
-    public List<Comercial> findAll() throws SQLException {
-        String sql = "SELECT * FROM comercial";
-        List<Comercial> comerciales = new ArrayList<>();
-        try (PreparedStatement ps = connection.prepareStatement(sql);
-             ResultSet rs = ps.executeQuery()) {
-            while (rs.next()) {
-                Comercial comercial = new Comercial();
-                comercial.setId(rs.getInt("id"));
-                comercial.setNombre(rs.getString("nombre"));
-                comercial.setApellido1(rs.getString("apellido1"));
-                comercial.setApellido2(rs.getString("apellido2"));
-                comercial.setComision(rs.getFloat("comision"));
-                comerciales.add(comercial);
-            }
-        }
-        return comerciales;
-    }
+    List<Comercial> listarComerciales();
 
-    public abstract List<Comercial> listarComerciales();
+    Comercial obtenerComercialPorId(int id);
 
-    public abstract Comercial obtenerComercialPorId(int id);
+    void insertarComercial(Comercial comercial);
 
-    public abstract void insertarComercial(Comercial comercial);
+    void actualizarComercial(Comercial comercial);
 
-    public abstract void actualizarComercial(Comercial comercial);
-
-    public abstract void eliminarComercial(int id);
+    void eliminarComercial(int id);
 }

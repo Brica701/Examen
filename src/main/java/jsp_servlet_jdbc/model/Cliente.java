@@ -9,7 +9,8 @@ public class Cliente {
     private String ciudad;
     private Integer categoria;
 
-    public Cliente() {}
+    public Cliente() {
+    }
 
     public Cliente(int id, String nombre, String apellido1, String apellido2, String ciudad, Integer categoria) {
         this.id = id;

@@ -7,7 +7,8 @@ public class Comercial {
     private String apellido2;
     private float comision;
 
-    public Comercial() {}
+    public Comercial() {
+    }
 
     public Comercial(int id, String nombre, String apellido1, String apellido2, float comision) {
         this.id = id;
