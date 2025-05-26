@@ -6,12 +6,48 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public abstract class ClienteDAOImpl implements ClienteDAO {
+public class ClienteDAOImpl implements ClienteDAO {
 
     private Connection connection;
 
     public ClienteDAOImpl(Connection connection) {
         this.connection = connection;
+    }
+
+    @Override
+    public Cliente findById(int id) {
+        String query = "SELECT * FROM cliente WHERE id = ?";
+        Cliente cliente = null;
+
+        try (PreparedStatement stmt = connection.prepareStatement(query)) {
+            stmt.setInt(1, id);
+            try (ResultSet rs = stmt.executeQuery()) {
+                if (rs.next()) {
+                    cliente = new Cliente(
+                            rs.getInt("id"),
+                            rs.getString("nombre"),
+                            rs.getString("apellido1"),
+                            rs.getString("apellido2"),
+                            rs.getString("ciudad"),
+                            rs.getObject("categoria") != null ? rs.getInt("categoria") : null
+                    );
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return cliente;
+    }
+
+    @Override
+    public List<Cliente> findAll() {
+        return getAllClientes(); // reutilizamos la implementación
+    }
+
+    @Override
+    public boolean update(Cliente cliente) {
+        return updateCliente(cliente); // reutilizamos la implementación
     }
 
     @Override
@@ -43,30 +79,7 @@ public abstract class ClienteDAOImpl implements ClienteDAO {
 
     @Override
     public Cliente getClienteById(int id) {
-        Cliente cliente = null;
-        String query = "SELECT * FROM cliente WHERE id = ?";
-
-        try (PreparedStatement stmt = connection.prepareStatement(query)) {
-            stmt.setInt(1, id);
-
-            try (ResultSet rs = stmt.executeQuery()) {
-                if (rs.next()) {
-                    cliente = new Cliente(
-                            rs.getInt("id"),
-                            rs.getString("nombre"),
-                            rs.getString("apellido1"),
-                            rs.getString("apellido2"),
-                            rs.getString("ciudad"),
-                            rs.getObject("categoria") != null ? rs.getInt("categoria") : null
-                    );
-                }
-            }
-
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-
-        return cliente;
+        return findById(id); // reutilizamos la implementación
     }
 
     @Override

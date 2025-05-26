@@ -1,7 +1,6 @@
 package jsp_servlet_jdbc.model;
 
 import java.time.LocalDate;
-import java.util.Date;
 
 public class Pedido {
     private int id;
@@ -10,11 +9,11 @@ public class Pedido {
     private int idCliente;
     private int idComercial;
 
-    // Nuevos atributos para acceso a objetos
+    // Relación con objetos
     private Cliente cliente;
     private Comercial comercial;
 
-    // Para mostrar en el listado
+    // Para mostrar en listados
     private String nombreCliente;
     private String apellido1Cliente;
     private String apellido2Cliente;
@@ -25,21 +24,38 @@ public class Pedido {
     public Pedido() {
     }
 
-    public Pedido(int id, double total, Date fecha, int idCliente, int idComercial) {
+    // Constructor con IDs directos (nuevo)
+    public Pedido(int id, double total, LocalDate fecha, int idCliente, int idComercial) {
         this.id = id;
         this.total = total;
-        this.fecha = fecha.toInstant().atZone(java.time.ZoneId.systemDefault()).toLocalDate();
+        this.fecha = fecha;
         this.idCliente = idCliente;
         this.idComercial = idComercial;
+
+        this.cliente = new Cliente();
+        this.cliente.setId(idCliente);
+
+        this.comercial = new Comercial();
+        this.comercial.setId(idComercial);
     }
 
+    // Constructor con objetos
     public Pedido(int id, double total, LocalDate fecha, Cliente cliente, Comercial comercial) {
         this.id = id;
         this.total = total;
         this.fecha = fecha;
         this.cliente = cliente;
         this.comercial = comercial;
+
+        if (cliente != null) {
+            this.idCliente = cliente.getId();
+        }
+        if (comercial != null) {
+            this.idComercial = comercial.getId();
+        }
     }
+
+    // Getters y Setters
 
     public int getId() {
         return id;

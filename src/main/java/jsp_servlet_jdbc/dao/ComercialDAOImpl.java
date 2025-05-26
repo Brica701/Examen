@@ -6,12 +6,22 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public abstract class ComercialDAOImpl implements ComercialDAO {
+public class ComercialDAOImpl implements ComercialDAO {
 
     private Connection connection;
 
     public ComercialDAOImpl(Connection connection) {
         this.connection = connection;
+    }
+
+    @Override
+    public Comercial findById(int id) {
+        return obtenerComercialPorId(id);
+    }
+
+    @Override
+    public List<Comercial> findAll() {
+        return listarComerciales();
     }
 
     @Override
